@@ -165,7 +165,7 @@ Column(
                 ],//allow to select only this zone, you can add multiple zone
                 showAllowSelectZone: true,//default is false
                 position: position,
-                onChenage: (value) {
+                onChange: (value) {
                     setState(() {
                         position = value;
                     });

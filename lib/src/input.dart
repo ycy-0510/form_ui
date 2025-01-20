@@ -17,7 +17,9 @@ class FormTextInput extends StatelessWidget {
       this.checker,
       this.onFieldSubmitted,
       this.isPassword = false,
-      this.tapOutsideCloseKeyboard = false});
+      this.tapOutsideCloseKeyboard = false,
+      this.inputType,
+      this.inputAction});
 
   ///Text Input Controller
   final TextEditingController? controller;
@@ -42,6 +44,12 @@ class FormTextInput extends StatelessWidget {
 
   ///Auto close keyboard by tap outside
   final bool tapOutsideCloseKeyboard;
+
+  ///Choose input type for text input, use [TextInputType.emailAddress] for emails and [TextInputType.number] for numbers
+  final TextInputType? inputType;
+
+  ///Choose input action
+  final TextInputAction? inputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +82,8 @@ class FormTextInput extends StatelessWidget {
                 FocusManager.instance.primaryFocus?.unfocus();
               }
             : null,
+        keyboardType: inputType,
+        textInputAction: inputAction,
       ),
     );
   }
