@@ -1,3 +1,5 @@
+## [0.3.1]
+- Add `focusNode` in `FormTextInput`
 ## [0.3.0]
 - Add `inputType` and `inputAction` in TextInput
 ## [0.2.1]

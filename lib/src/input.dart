@@ -19,7 +19,8 @@ class FormTextInput extends StatelessWidget {
       this.isPassword = false,
       this.tapOutsideCloseKeyboard = false,
       this.inputType,
-      this.inputAction});
+      this.inputAction,
+      this.focusNode});
 
   ///Text Input Controller
   final TextEditingController? controller;
@@ -50,6 +51,9 @@ class FormTextInput extends StatelessWidget {
 
   ///Choose input action
   final TextInputAction? inputAction;
+
+  ///You can close open keyboard by using [FocusNode]
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +88,7 @@ class FormTextInput extends StatelessWidget {
             : null,
         keyboardType: inputType,
         textInputAction: inputAction,
+        focusNode: focusNode,
       ),
     );
   }
