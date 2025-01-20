@@ -1,3 +1,5 @@
+## [0.2.0]
+- Add attributes to FormTextInput
 ## [0.1.1+1]
 - Modify the LICENSE file
 ## [0.1.1]

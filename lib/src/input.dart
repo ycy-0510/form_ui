@@ -15,7 +15,9 @@ class FormTextInput extends StatelessWidget {
       super.key,
       this.errorMsg,
       this.checker,
-      this.onFieldSubmitted});
+      this.onFieldSubmitted,
+      this.isPassword = false,
+      this.tapOutsideCloseKeyboard = false});
 
   ///Text Input Controller
   final TextEditingController? controller;
@@ -35,6 +37,12 @@ class FormTextInput extends StatelessWidget {
   ///Trigger when Field Submit
   final ValueChanged<String>? onFieldSubmitted;
 
+  ///Choose the Text Input is for password
+  final bool isPassword;
+
+  ///Auto close keyboard by tap outside
+  final bool tapOutsideCloseKeyboard;
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -47,6 +55,9 @@ class FormTextInput extends StatelessWidget {
           hintStyle: TextStyle(height: 2),
           labelText: labelText,
         ),
+        obscureText: isPassword,
+        enableSuggestions: !isPassword,
+        autocorrect: !isPassword,
         validator: checker != null
             ? (value) {
                 if (checker!(value ?? '')) {
@@ -58,6 +69,11 @@ class FormTextInput extends StatelessWidget {
         onChanged: onChange,
         onFieldSubmitted: onFieldSubmitted,
         onEditingComplete: onEditingComplete,
+        onTapOutside: tapOutsideCloseKeyboard
+            ? (event) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
+            : null,
       ),
     );
   }
