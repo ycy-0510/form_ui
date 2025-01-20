@@ -316,7 +316,7 @@ class _PositionSelectPartState extends State<PositionSelectPart> {
                 ],
                 // showAllowSelectZone: true,
                 position: position,
-                onChenage: (value) {
+                onChange: (value) {
                   setState(() {
                     position = value;
                   });

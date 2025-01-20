@@ -250,7 +250,7 @@ class FormPositionSelect extends StatelessWidget {
   const FormPositionSelect(
       {required this.bytes,
       this.position,
-      this.onChenage,
+      this.onChange,
       required this.allowSelectZone,
       this.showAllowSelectZone = false,
       this.flip = false,
@@ -269,7 +269,7 @@ class FormPositionSelect extends StatelessWidget {
   final bool showAllowSelectZone;
 
   ///Trigger when Value Change
-  final ValueChanged<Offset>? onChenage;
+  final ValueChanged<Offset>? onChange;
 
   ///Value for Flip or not
   final bool flip;
@@ -286,7 +286,7 @@ class FormPositionSelect extends StatelessWidget {
               height: snapshot.data?.height.toDouble(),
               child: GestureDetector(
                 onTapDown: (details) {
-                  if (onChenage != null) {
+                  if (onChange != null) {
                     Offset point = _adjustedOffset(
                             details.localPosition,
                             Size(snapshot.data!.width.toDouble(),
@@ -294,7 +294,7 @@ class FormPositionSelect extends StatelessWidget {
                         .scale(100 / snapshot.data!.width,
                             100 / snapshot.data!.height);
                     if (allowSelectZone.any((zone) => zone.contains(point))) {
-                      onChenage!(point);
+                      onChange!(point);
                     }
                   }
                 },
