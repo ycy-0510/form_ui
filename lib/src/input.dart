@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_ui/src/theme.dart';
 
+///Text Input
 class FormTextInput extends StatelessWidget {
   const FormTextInput(
       {this.hintText,
@@ -15,11 +16,23 @@ class FormTextInput extends StatelessWidget {
       this.errorMsg,
       this.checker,
       this.onFieldSubmitted});
+
+  ///Text Input Controller
   final TextEditingController? controller;
+
+  ///String for Text Input
   final String? hintText, labelText, errorMsg;
+
+  /// Error checker
   final bool Function(String)? checker;
+
+  ///Trigger when value change
   final ValueChanged? onChange;
+
+  ///Trigger when Editing Complete
   final VoidCallback? onEditingComplete;
+
+  ///Trigger when Field Submit
   final ValueChanged<String>? onFieldSubmitted;
 
   @override
@@ -50,6 +63,7 @@ class FormTextInput extends StatelessWidget {
   }
 }
 
+///Select Input
 class FormSelect<T> extends StatelessWidget {
   const FormSelect(
       {required this.items,
@@ -57,9 +71,17 @@ class FormSelect<T> extends StatelessWidget {
       this.onChange,
       super.key,
       this.value});
+
+  ///Select Itmes
   final List<DropdownMenuItem<T>> items;
+
+  ///Trigger when Value Chaneg
   final ValueChanged<T?>? onChange;
+
+  /// Default Value
   final T? value;
+
+  /// hint
   final String hint;
 
   @override
@@ -92,6 +114,7 @@ class FormSelect<T> extends StatelessWidget {
   }
 }
 
+///Counter Input
 class FormCounter extends StatelessWidget {
   const FormCounter(
       {required this.hint,
@@ -100,9 +123,17 @@ class FormCounter extends StatelessWidget {
       this.min = 0,
       this.onChange,
       super.key});
+
+  /// hint
   final String hint;
+
+  /// Max and Min value for counter
   final int min, max;
+
+  ///Default value
   final int value;
+
+  ///Trigger when Value Change
   final ValueChanged<int>? onChange;
 
   @override
@@ -153,6 +184,7 @@ class FormCounter extends StatelessWidget {
   }
 }
 
+///Checkbox Input
 class FormCheckBox extends StatelessWidget {
   const FormCheckBox({
     required this.value,
@@ -160,8 +192,14 @@ class FormCheckBox extends StatelessWidget {
     this.onChange,
     super.key,
   });
+
+  ///Default Value
   final bool value;
+
+  /// hint
   final String hint;
+
+  ///Trigger when Value Chage
   final ValueChanged? onChange;
 
   @override
@@ -191,6 +229,7 @@ class FormCheckBox extends StatelessWidget {
   }
 }
 
+///Position Select Input
 class FormPositionSelect extends StatelessWidget {
   const FormPositionSelect(
       {required this.bytes,
@@ -200,17 +239,29 @@ class FormPositionSelect extends StatelessWidget {
       this.showAllowSelectZone = false,
       this.flip = false,
       super.key});
+
+  ///Image Bytes
   final Uint8List bytes;
+
+  /// Selected Position
   final Offset? position;
+
+  /// List of Allow Select Zone
   final List<Rect> allowSelectZone;
+
+  ///Show Allow Select Zone on Image for Debug
   final bool showAllowSelectZone;
+
+  ///Trigger when Value Change
   final ValueChanged<Offset>? onChenage;
+
+  ///Value for Flip or not
   final bool flip;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: bg(),
+      future: _bg(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           return FittedBox(
@@ -220,7 +271,7 @@ class FormPositionSelect extends StatelessWidget {
               child: GestureDetector(
                 onTapDown: (details) {
                   if (onChenage != null) {
-                    Offset point = adjustedOffset(
+                    Offset point = _adjustedOffset(
                             details.localPosition,
                             Size(snapshot.data!.width.toDouble(),
                                 snapshot.data!.height.toDouble()))
@@ -232,11 +283,11 @@ class FormPositionSelect extends StatelessWidget {
                   }
                 },
                 child: StreamBuilder<int>(
-                    stream: blink(),
+                    stream: _blink(),
                     builder: (context, streamSnap) {
                       if (streamSnap.hasData) {
                         return CustomPaint(
-                          painter: FormPosisionSelectPainter(
+                          painter: _FormPosisionSelectPainter(
                             snapshot.data!,
                             position,
                             streamSnap.data!,
@@ -264,18 +315,18 @@ class FormPositionSelect extends StatelessWidget {
     );
   }
 
-  Offset adjustedOffset(Offset offset, Size size) =>
+  Offset _adjustedOffset(Offset offset, Size size) =>
       flip ? Offset(size.width - offset.dx, size.height - offset.dy) : offset;
 
-  Future<ui.Image> bg() async {
+  Future<ui.Image> _bg() async {
     ui.Image image = await decodeImageFromList(bytes);
     if (flip) {
-      image = await rotatedImage(image: image, angle: pi);
+      image = await _rotatedImage(image: image, angle: pi);
     }
     return image;
   }
 
-  Future<ui.Image> rotatedImage(
+  Future<ui.Image> _rotatedImage(
       {required ui.Image image, required double angle}) {
     var pictureRecorder = ui.PictureRecorder();
     Canvas canvas = Canvas(pictureRecorder);
@@ -293,21 +344,21 @@ class FormPositionSelect extends StatelessWidget {
     return pictureRecorder.endRecording().toImage(image.width, image.height);
   }
 
-  Stream<int> blink() {
+  Stream<int> _blink() {
     return Stream.periodic(Duration(milliseconds: 200), (i) {
       return i % 10;
     });
   }
 }
 
-class FormPosisionSelectPainter extends CustomPainter {
+class _FormPosisionSelectPainter extends CustomPainter {
   final ui.Image bg;
   final Offset? position;
   final int blink;
   final List<Rect> allowSelectZone;
   final bool showAllowSelectZone;
   final bool flip;
-  const FormPosisionSelectPainter(this.bg, this.position, this.blink,
+  const _FormPosisionSelectPainter(this.bg, this.position, this.blink,
       this.allowSelectZone, this.showAllowSelectZone, this.flip);
   @override
   void paint(Canvas canvas, Size size) {
@@ -355,7 +406,7 @@ class FormPosisionSelectPainter extends CustomPainter {
       flip ? Offset(size.width - offset.dx, size.height - offset.dy) : offset;
 
   @override
-  bool shouldRepaint(FormPosisionSelectPainter oldDelegate) {
+  bool shouldRepaint(_FormPosisionSelectPainter oldDelegate) {
     return true;
   }
 }

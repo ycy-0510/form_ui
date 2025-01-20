@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+///Theme for Form Ui
 class FormTheme {
+  /// LightMode Theme
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     colorScheme: ColorScheme.fromSeed(
@@ -80,6 +82,7 @@ class FormTheme {
     splashFactory: NoSplash.splashFactory,
   );
 
+  /// DarkMode Theme
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     colorScheme: ColorScheme.fromSeed(
@@ -155,6 +158,7 @@ class FormTheme {
     splashFactory: NoSplash.splashFactory,
   );
 
+  /// Auto Select Themedata
   static ThemeData theme(context) =>
       Theme.of(context).brightness == Brightness.light ? lightTheme : darkTheme;
 }
