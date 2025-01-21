@@ -97,8 +97,8 @@ class FormTextInput extends StatelessWidget {
         keyboardType: inputType,
         textInputAction: inputAction,
         focusNode: focusNode,
-        maxLines: maxLine,
-        minLines: minLine,
+        maxLines: isPassword ? 1 : (maxLine ?? 1),
+        minLines: isPassword ? 1 : (minLine ?? 1),
       ),
     );
   }

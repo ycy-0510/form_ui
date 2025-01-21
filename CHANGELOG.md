@@ -1,5 +1,7 @@
+## [0.3.3]
+- Fix `minLines` and `maxLines` error in `FormTextInput` while using `isPassword` = true
 ## [0.3.2]
--Add `minLines` and `maxLines` in `FormTextInput`
+- Add `minLines` and `maxLines` in `FormTextInput`
 ## [0.3.1]
 - Add `focusNode` in `FormTextInput`
 ## [0.3.0]
