@@ -113,6 +113,21 @@ class _HomeBodyState extends State<HomeBody> {
                       duration: Duration(milliseconds: 300),
                     ));
                   },
+                  maxLine: 5,
+                  minLine: 3,
+                ),
+                FormTextInput(
+                  hintText: 'Hint Text',
+                  labelText: 'Label Text',
+                  onEditingComplete: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        'Text inputed!',
+                      ),
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(milliseconds: 300),
+                    ));
+                  },
                 ),
                 FormPrimaryButton(
                     onPressed: () {

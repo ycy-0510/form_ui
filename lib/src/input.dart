@@ -20,7 +20,9 @@ class FormTextInput extends StatelessWidget {
       this.tapOutsideCloseKeyboard = false,
       this.inputType,
       this.inputAction,
-      this.focusNode});
+      this.focusNode,
+      this.maxLine,
+      this.minLine});
 
   ///Text Input Controller
   final TextEditingController? controller;
@@ -54,6 +56,12 @@ class FormTextInput extends StatelessWidget {
 
   ///You can close open keyboard by using [FocusNode]
   final FocusNode? focusNode;
+
+  ///Max line ui display
+  final int? maxLine;
+
+  ///Min line ui display
+  final int? minLine;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +97,8 @@ class FormTextInput extends StatelessWidget {
         keyboardType: inputType,
         textInputAction: inputAction,
         focusNode: focusNode,
+        maxLines: maxLine,
+        minLines: minLine,
       ),
     );
   }
