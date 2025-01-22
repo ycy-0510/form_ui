@@ -21,6 +21,7 @@ class FormTextInput extends StatelessWidget {
       this.inputType,
       this.inputAction,
       this.focusNode,
+      this.autofillHints,
       this.maxLine,
       this.minLine});
 
@@ -63,6 +64,9 @@ class FormTextInput extends StatelessWidget {
   ///Min line ui display
   final int? minLine;
 
+  ///Use [AutofillHints] set auto fill hint
+  final List<String>? autofillHints;
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -99,6 +103,7 @@ class FormTextInput extends StatelessWidget {
         focusNode: focusNode,
         maxLines: isPassword ? 1 : (maxLine ?? 1),
         minLines: isPassword ? 1 : (minLine ?? 1),
+        autofillHints: autofillHints,
       ),
     );
   }

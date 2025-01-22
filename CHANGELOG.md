@@ -1,3 +1,5 @@
+## [0.3.4]
+- Add `autoFillHints` in `FormTextInput`
 ## [0.3.3]
 - Fix `minLines` and `maxLines` error in `FormTextInput` while using `isPassword` = true
 ## [0.3.2]
