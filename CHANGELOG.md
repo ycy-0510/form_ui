@@ -1,3 +1,6 @@
+## [0.3.5]
+- Fix `onPressed` in `FormPrimaryButton` and `FormSecondaryButton`
+- Add red border in `FormPositionSelect` when position is not selected
 ## [0.3.4]
 - Add `autoFillHints` in `FormTextInput`
 ## [0.3.3]

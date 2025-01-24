@@ -445,6 +445,12 @@ class _FormPosisionSelectPainter extends CustomPainter {
             10 + i.toDouble(),
             linePaint);
       }
+    } else {
+      Paint linePaint = Paint()
+        ..color = Colors.red
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5;
+      canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), linePaint);
     }
   }
 

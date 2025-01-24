@@ -6,8 +6,8 @@ class FormPrimaryButton extends StatelessWidget {
   const FormPrimaryButton(
       {required this.onPressed, this.style, required this.child, super.key});
 
-  ///Trigger on Press
-  final VoidCallback onPressed;
+  ///Trigger on Press, set null to disable button
+  final VoidCallback? onPressed;
   final Widget child;
 
   ///Button Style, you can use default style or use [FormPrimaryButton.dangerStyle] to use danger style.
@@ -37,8 +37,8 @@ class FormSecondaryButton extends StatelessWidget {
   const FormSecondaryButton(
       {required this.onPressed, this.style, required this.child, super.key});
 
-  ///Trigger on Press
-  final VoidCallback onPressed;
+  ///Trigger on Press, set null to disable button
+  final VoidCallback? onPressed;
   final Widget child;
 
   ///Button Style, you can use default style or use [FormSecondaryButton.dangerStyle] to use danger style.
