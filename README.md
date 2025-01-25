@@ -1,6 +1,11 @@
 # Form UI
+![Pub Publisher](https://img.shields.io/pub/publisher/form_ui) ![Pub Points](https://img.shields.io/pub/points/form_ui) ![Pub Version](https://img.shields.io/pub/v/form_ui)
+
 This is a simple and clean form UI package for flutter. It is a collection of different form elements like buttons, text inputs, select inputs, counter inputs, checkbox inputs, and position select inputs. You can use it in your flutter project to make your form more attractive and user-friendly.
+
+
 ## Demo
+![Static Badge](https://img.shields.io/badge/netlify-Deployed-blue?link=https%3A%2F%2Fflutterformui.netlify.app)
 [Online Demo](https://flutterformui.netlify.app)
 
 ## Features
