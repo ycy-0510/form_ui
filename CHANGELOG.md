@@ -1,3 +1,5 @@
+## [0.3.6]
+- Add `HapticFeedback` in all input
 ## [0.3.5+1]
 - Update README.md
 ## [0.3.5]

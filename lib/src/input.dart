@@ -85,6 +85,7 @@ class FormTextInput extends StatelessWidget {
         validator: checker != null
             ? (value) {
                 if (checker!(value ?? '')) {
+                  HapticFeedback.heavyImpact();
                   return errorMsg ?? 'Please enter text';
                 }
                 return null;
@@ -151,7 +152,12 @@ class FormSelect<T> extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
             hint: Text(hint),
             value: value,
-            onChanged: onChange,
+            onChanged: (v) {
+              HapticFeedback.lightImpact();
+              if (onChange != null) {
+                onChange!(v);
+              }
+            },
             items: items,
           ),
         ),
@@ -255,7 +261,14 @@ class FormCheckBox extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Checkbox(value: value, onChanged: onChange),
+          Checkbox(
+              value: value,
+              onChanged: (v) {
+                HapticFeedback.lightImpact();
+                if (onChange != null) {
+                  onChange!(v);
+                }
+              }),
           Expanded(
             child: GestureDetector(
               child: Text(
@@ -263,6 +276,7 @@ class FormCheckBox extends StatelessWidget {
                 style: TextStyle(fontSize: 20),
               ),
               onTap: () {
+                HapticFeedback.lightImpact();
                 if (onChange != null) {
                   onChange!(!value);
                 }
@@ -316,14 +330,15 @@ class FormPositionSelect extends StatelessWidget {
               height: snapshot.data?.height.toDouble(),
               child: GestureDetector(
                 onTapDown: (details) {
-                  if (onChange != null) {
-                    Offset point = _adjustedOffset(
-                            details.localPosition,
-                            Size(snapshot.data!.width.toDouble(),
-                                snapshot.data!.height.toDouble()))
-                        .scale(100 / snapshot.data!.width,
-                            100 / snapshot.data!.height);
-                    if (allowSelectZone.any((zone) => zone.contains(point))) {
+                  Offset point = _adjustedOffset(
+                          details.localPosition,
+                          Size(snapshot.data!.width.toDouble(),
+                              snapshot.data!.height.toDouble()))
+                      .scale(100 / snapshot.data!.width,
+                          100 / snapshot.data!.height);
+                  if (allowSelectZone.any((zone) => zone.contains(point))) {
+                    HapticFeedback.lightImpact();
+                    if (onChange != null) {
                       onChange!(point);
                     }
                   }
