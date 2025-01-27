@@ -1,3 +1,5 @@
+## [0.3.7]
+- Remove `HapticFeedback` in text input checker
 ## [0.3.6]
 - Add `HapticFeedback` in all input
 ## [0.3.5+1]

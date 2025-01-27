@@ -85,7 +85,6 @@ class FormTextInput extends StatelessWidget {
         validator: checker != null
             ? (value) {
                 if (checker!(value ?? '')) {
-                  HapticFeedback.heavyImpact();
                   return errorMsg ?? 'Please enter text';
                 }
                 return null;
