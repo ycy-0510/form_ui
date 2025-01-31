@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs
+
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
@@ -290,7 +293,7 @@ class FormCheckBox extends StatelessWidget {
 
 ///Position Select Input
 class FormPositionSelect extends StatelessWidget {
-  const FormPositionSelect(
+  FormPositionSelect(
       {required this.bytes,
       this.position,
       this.onChange,
@@ -317,6 +320,8 @@ class FormPositionSelect extends StatelessWidget {
   ///Value for Flip or not
   final bool flip;
 
+  final StreamController<bool> _selectZone = StreamController();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -340,28 +345,40 @@ class FormPositionSelect extends StatelessWidget {
                     if (onChange != null) {
                       onChange!(point);
                     }
+                  } else {
+                    _selectZone.add(true);
                   }
                 },
-                child: StreamBuilder<int>(
-                    stream: _blink(),
-                    builder: (context, streamSnap) {
-                      if (streamSnap.hasData) {
-                        return CustomPaint(
-                          painter: _FormPosisionSelectPainter(
-                            snapshot.data!,
-                            position,
-                            streamSnap.data!,
-                            allowSelectZone,
-                            showAllowSelectZone,
-                            flip,
-                          ),
-                          size: Size(300, 20),
-                        );
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        );
-                      }
+                onTapUp: (details) {
+                  Future.delayed(Duration(milliseconds: 250)).then((_) {
+                    _selectZone.add(false);
+                  });
+                },
+                child: StreamBuilder(
+                    stream: _selectZone.stream,
+                    builder: (context, selectSnapShot) {
+                      return StreamBuilder<int>(
+                          stream: _blink(),
+                          builder: (context, blinkStreamSnap) {
+                            if (blinkStreamSnap.hasData) {
+                              return CustomPaint(
+                                painter: _FormPosisionSelectPainter(
+                                  snapshot.data!,
+                                  position,
+                                  blinkStreamSnap.data!,
+                                  allowSelectZone,
+                                  showAllowSelectZone ||
+                                      (selectSnapShot.data ?? false),
+                                  flip,
+                                ),
+                                size: Size(300, 20),
+                              );
+                            } else {
+                              return Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              );
+                            }
+                          });
                     }),
               ),
             ),
@@ -425,7 +442,7 @@ class _FormPosisionSelectPainter extends CustomPainter {
     canvas.drawImage(bg, Offset.zero, Paint());
     if (showAllowSelectZone) {
       Paint paint = Paint()
-        ..color = Colors.blue.withAlpha(200)
+        ..color = Colors.red.withAlpha(150)
         ..style = PaintingStyle.fill;
       for (var zone in allowSelectZone) {
         canvas.drawRect(

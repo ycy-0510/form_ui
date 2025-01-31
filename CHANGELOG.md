@@ -1,3 +1,5 @@
+## [0.4.0]
+- Add hint of Select Zone in `FormPositionSelect`
 ## [0.3.7]
 - Remove `HapticFeedback` in text input checker
 ## [0.3.6]
