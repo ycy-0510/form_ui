@@ -301,6 +301,7 @@ class FormPositionSelect extends StatelessWidget {
       this.showAllowSelectZone = false,
       this.flip = false,
       this.tapOffset = Offset.zero,
+      this.allowedOffset = 10,
       super.key});
 
   ///Image Bytes
@@ -323,6 +324,9 @@ class FormPositionSelect extends StatelessWidget {
 
   ///The difference between intended and actual touch position
   final Offset tapOffset;
+
+  ///
+  final double allowedOffset;
 
   final StreamController<bool> _selectZone = StreamController();
 
@@ -349,14 +353,21 @@ class FormPositionSelect extends StatelessWidget {
                     if (onChange != null) {
                       onChange!(point);
                     }
+                  } else if (allowSelectZone.any((zone) => Rect.fromCenter(
+                          center: zone.center,
+                          width: zone.width + allowedOffset,
+                          height: zone.height + allowedOffset)
+                      .contains(point))) {
+                    HapticFeedback.lightImpact();
+                    if (onChange != null) {
+                      onChange!(_fitToZone(point, allowSelectZone));
+                    }
                   } else {
                     _selectZone.add(true);
+                    Future.delayed(Duration(milliseconds: 300)).then((_) {
+                      _selectZone.add(false);
+                    });
                   }
-                },
-                onTapUp: (details) {
-                  Future.delayed(Duration(milliseconds: 250)).then((_) {
-                    _selectZone.add(false);
-                  });
                 },
                 child: StreamBuilder(
                     stream: _selectZone.stream,
@@ -407,6 +418,56 @@ class FormPositionSelect extends StatelessWidget {
     return image;
   }
 
+  Offset _fitToZone(Offset point, List<Rect> zones) {
+    Offset minPoint = Offset.zero;
+    //point to point
+    double minDis = double.infinity;
+    for (final zone in zones) {
+      if (zone.left < point.dx && point.dx < zone.right) {
+        //line top bottom
+        if (point.dy < zone.top) {
+          if ((point.dy - zone.top).abs() < minDis) {
+            minDis = (point.dy - zone.top).abs();
+            minPoint = Offset(point.dx, zone.top);
+          }
+        } else {
+          if ((point.dy - zone.bottom).abs() < minDis) {
+            minDis = (point.dy - zone.bottom).abs();
+            minPoint = Offset(point.dx, zone.bottom);
+          }
+        }
+      } else if (zone.top < point.dy && point.dy < zone.bottom) {
+        //line left right
+        if (point.dx < zone.left) {
+          if ((point.dx - zone.left).abs() < minDis) {
+            minDis = (point.dx - zone.left).abs();
+            minPoint = Offset(zone.left, point.dy);
+          }
+        } else {
+          if ((point.dx - zone.right).abs() < minDis) {
+            minDis = (point.dx - zone.right).abs();
+            minPoint = Offset(zone.right, point.dy);
+          }
+        }
+      } else {
+        //point
+        final testPoints = [
+          zone.topLeft,
+          zone.topRight,
+          zone.bottomRight,
+          zone.bottomLeft
+        ];
+        for (final testPoint in testPoints) {
+          if ((point - testPoint).distance < minDis) {
+            minDis = (point - testPoint).distance;
+            minPoint = testPoint;
+          }
+        }
+      }
+    }
+    return minPoint;
+  }
+
   Future<ui.Image> _rotatedImage(
       {required ui.Image image, required double angle}) {
     var pictureRecorder = ui.PictureRecorder();
@@ -446,7 +507,7 @@ class _FormPosisionSelectPainter extends CustomPainter {
     canvas.drawImage(bg, Offset.zero, Paint());
     if (showAllowSelectZone) {
       Paint paint = Paint()
-        ..color = Colors.red.withAlpha(150)
+        ..color = Colors.black.withAlpha(150)
         ..style = PaintingStyle.fill;
       for (var zone in allowSelectZone) {
         canvas.drawRect(

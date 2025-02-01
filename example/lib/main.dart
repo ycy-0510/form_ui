@@ -97,8 +97,8 @@ class _HomeBodyState extends State<HomeBody> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: 10,
               children: [
-                TapOffsetPart(),
                 PositionSelectPart(),
+                TapOffsetPart(),
                 CheckBoxPart(),
                 CounterPart(),
                 SelectPart(),
@@ -332,7 +332,6 @@ class _PositionSelectPartState extends State<PositionSelectPart> {
                 ],
                 // showAllowSelectZone: true,
                 position: position,
-                tapOffset: Offset(50, 0),
                 onChange: (value) {
                   setState(() {
                     position = value;

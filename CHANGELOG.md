@@ -1,3 +1,5 @@
+## [0.4.2]
+- Add `allowedOffset` in `FormPositionSelect` to set the allowed offset of the selected position
 ## [0.4.1]
 - Add `FormTapOffsetTool` to adjust the position of the `FormPositionSelect` widget
 ## [0.4.0]
