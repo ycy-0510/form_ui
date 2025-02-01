@@ -1,3 +1,5 @@
+## [0.4.1]
+- Add `FormTapOffsetTool` to adjust the position of the `FormPositionSelect` widget
 ## [0.4.0]
 - Add hint of Select Zone in `FormPositionSelect`
 ## [0.3.7]

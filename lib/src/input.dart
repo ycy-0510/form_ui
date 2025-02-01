@@ -300,6 +300,7 @@ class FormPositionSelect extends StatelessWidget {
       required this.allowSelectZone,
       this.showAllowSelectZone = false,
       this.flip = false,
+      this.tapOffset = Offset.zero,
       super.key});
 
   ///Image Bytes
@@ -320,6 +321,9 @@ class FormPositionSelect extends StatelessWidget {
   ///Value for Flip or not
   final bool flip;
 
+  ///The difference between intended and actual touch position
+  final Offset tapOffset;
+
   final StreamController<bool> _selectZone = StreamController();
 
   @override
@@ -335,7 +339,7 @@ class FormPositionSelect extends StatelessWidget {
               child: GestureDetector(
                 onTapDown: (details) {
                   Offset point = _adjustedOffset(
-                          details.localPosition,
+                          details.localPosition - tapOffset,
                           Size(snapshot.data!.width.toDouble(),
                               snapshot.data!.height.toDouble()))
                       .scale(100 / snapshot.data!.width,

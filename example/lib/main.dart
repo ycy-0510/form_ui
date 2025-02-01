@@ -97,6 +97,7 @@ class _HomeBodyState extends State<HomeBody> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: 10,
               children: [
+                TapOffsetPart(),
                 PositionSelectPart(),
                 CheckBoxPart(),
                 CounterPart(),
@@ -331,6 +332,7 @@ class _PositionSelectPartState extends State<PositionSelectPart> {
                 ],
                 // showAllowSelectZone: true,
                 position: position,
+                tapOffset: Offset(50, 0),
                 onChange: (value) {
                   setState(() {
                     position = value;
@@ -353,6 +355,52 @@ class _PositionSelectPartState extends State<PositionSelectPart> {
           },
         ),
       ],
+    );
+  }
+
+  Future<ByteData> getBgBytes() async {
+    return await rootBundle.load('assets/example.png');
+  }
+}
+
+class TapOffsetPart extends StatefulWidget {
+  const TapOffsetPart({super.key});
+
+  @override
+  State<TapOffsetPart> createState() => _TapOffsetPartState();
+}
+
+class _TapOffsetPartState extends State<TapOffsetPart> {
+  Offset? position;
+  bool flip = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: getBgBytes(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return FormTapOffsetTool(
+            bytes: snapshot.data!.buffer.asUint8List(),
+            onTap: (value) {
+              setState(() {
+                position = value;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  'Tap Offset: (${value.dx.toStringAsFixed(2)},${value.dy.toStringAsFixed(2)} )',
+                ),
+                behavior: SnackBarBehavior.floating,
+                duration: Duration(milliseconds: 300),
+              ));
+            },
+          );
+        } else {
+          return Center(
+            child: Text('Reading Bytes'),
+          );
+        }
+      },
     );
   }
 
