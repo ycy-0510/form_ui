@@ -26,7 +26,8 @@ class FormTextInput extends StatelessWidget {
       this.focusNode,
       this.autofillHints,
       this.maxLine,
-      this.minLine});
+      this.minLine,
+      this.disabled = false});
 
   ///Text Input Controller
   final TextEditingController? controller;
@@ -70,6 +71,9 @@ class FormTextInput extends StatelessWidget {
   ///Use [AutofillHints] set auto fill hint
   final List<String>? autofillHints;
 
+  ///Text input will be readonly when set true
+  final bool disabled;
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -82,6 +86,7 @@ class FormTextInput extends StatelessWidget {
           hintStyle: TextStyle(height: 2),
           labelText: labelText,
         ),
+        readOnly: disabled,
         obscureText: isPassword,
         enableSuggestions: !isPassword,
         autocorrect: !isPassword,

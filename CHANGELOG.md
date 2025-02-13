@@ -1,3 +1,5 @@
+## [0.4.3]
+- Add `disabled` in `FormTextInput` to disable the text input
 ## [0.4.2]
 - Add `allowedOffset` in `FormPositionSelect` to set the allowed offset of the selected position
 ## [0.4.1]
