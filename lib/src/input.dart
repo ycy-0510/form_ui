@@ -124,7 +124,8 @@ class FormSelect<T> extends StatelessWidget {
       required this.hint,
       this.onChange,
       super.key,
-      this.value});
+      this.value,
+      this.disabled = false});
 
   ///Select Itmes
   final List<DropdownMenuItem<T>> items;
@@ -137,6 +138,9 @@ class FormSelect<T> extends StatelessWidget {
 
   /// hint
   final String hint;
+
+  ///set true to disable
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +169,7 @@ class FormSelect<T> extends StatelessWidget {
                 onChange!(v);
               }
             },
-            items: items,
+            items: disabled ? null : items,
           ),
         ),
       ),

@@ -85,6 +85,7 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -120,6 +121,7 @@ class _HomeBodyState extends State<HomeBody> {
                 FormTextInput(
                   hintText: 'Hint Text',
                   labelText: 'Label Text',
+                  controller: _controller,
                   onEditingComplete: () {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
@@ -129,6 +131,21 @@ class _HomeBodyState extends State<HomeBody> {
                       duration: Duration(milliseconds: 300),
                     ));
                   },
+                ),
+                FormTextInput(
+                  hintText: 'Disabled Text Input',
+                  labelText: 'Label Text',
+                  controller: _controller,
+                  onEditingComplete: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        'Text inputed!',
+                      ),
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(milliseconds: 300),
+                    ));
+                  },
+                  disabled: true,
                 ),
                 FormPrimaryButton(
                     onPressed: () {
@@ -210,26 +227,54 @@ class _SelectPartState extends State<SelectPart> {
   int? value;
   @override
   Widget build(BuildContext context) {
-    return FormSelect<int>(
-      hint: 'Please Select You Name',
-      value: value,
-      items: [
-        DropdownMenuItem(value: 1, child: Text('First')),
-        DropdownMenuItem(value: 2, child: Text('Second')),
-        DropdownMenuItem(value: 3, child: Text('Third')),
+    return Column(
+      spacing: 10,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        FormSelect<int>(
+          hint: 'Please Select You Name',
+          value: value,
+          items: [
+            DropdownMenuItem(value: 1, child: Text('First')),
+            DropdownMenuItem(value: 2, child: Text('Second')),
+            DropdownMenuItem(value: 3, child: Text('Third')),
+          ],
+          onChange: (int? v) {
+            setState(() {
+              value = v;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Selected: $v',
+              ),
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(milliseconds: 300),
+            ));
+          },
+        ),
+        FormSelect<int>(
+          hint: ['First', 'Second', 'Third'][(value ?? 1) - 1],
+          value: value,
+          items: [
+            DropdownMenuItem(value: 1, child: Text('First')),
+            DropdownMenuItem(value: 2, child: Text('Second')),
+            DropdownMenuItem(value: 3, child: Text('Third')),
+          ],
+          disabled: true,
+          onChange: (int? v) {
+            setState(() {
+              value = v;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Selected: $v',
+              ),
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(milliseconds: 300),
+            ));
+          },
+        )
       ],
-      onChange: (int? v) {
-        setState(() {
-          value = v;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-            'Selected: $v',
-          ),
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(milliseconds: 300),
-        ));
-      },
     );
   }
 }

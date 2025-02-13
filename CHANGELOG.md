@@ -1,3 +1,5 @@
+## [0.4.4]
+- Add `disabled` in `FormSelectInput` to disable the select input
 ## [0.4.3]
 - Add `disabled` in `FormTextInput` to disable the text input
 ## [0.4.2]
