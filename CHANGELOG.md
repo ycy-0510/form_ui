@@ -1,3 +1,5 @@
+## [0.5.0]
+- Add `FormPositionView` to show position in the screen
 ## [0.4.4]
 - Add `disabled` in `FormSelectInput` to disable the select input
 ## [0.4.3]

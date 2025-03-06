@@ -23,11 +23,9 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue, brightness: Brightness.light)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.light)),
       darkTheme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue, brightness: Brightness.dark)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark)),
       themeMode: themeMode,
       home: ScaffoldMessenger(
         child: Scaffold(
@@ -99,6 +97,7 @@ class _HomeBodyState extends State<HomeBody> {
               spacing: 10,
               children: [
                 PositionSelectPart(),
+                PositionViewPart(),
                 TapOffsetPart(),
                 CheckBoxPart(),
                 CounterPart(),
@@ -174,8 +173,7 @@ class _HomeBodyState extends State<HomeBody> {
                     style: FormPrimaryButton.dangerStyle,
                     child: Text(
                       'Primary Danger',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )),
                 FormSecondaryButton(
                     onPressed: () {
@@ -204,8 +202,7 @@ class _HomeBodyState extends State<HomeBody> {
                     style: FormSecondaryButton.dangerStyle,
                     child: Text(
                       'Secondary Danger',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )),
               ],
             ),
@@ -366,10 +363,10 @@ class _PositionSelectPartState extends State<PositionSelectPart> {
               return FormPositionSelect(
                 bytes: snapshot.data!.buffer.asUint8List(),
                 allowSelectZone: [
-                  Rect.fromLTRB(43.5374149659864, 11.1975116640747,
-                      46.8537414965986, 88.4914463452566),
-                  Rect.fromLTRB(46.8537414965986, 11.1975116640747,
-                      53.1462585034014, 46.9673405909798),
+                  Rect.fromLTRB(
+                      43.5374149659864, 11.1975116640747, 46.8537414965986, 88.4914463452566),
+                  Rect.fromLTRB(
+                      46.8537414965986, 11.1975116640747, 53.1462585034014, 46.9673405909798),
                   // Rect.fromLTRB(53.1462585034014, 11.1975116640747,
                   //     56.4625850340136, 88.4914463452566),
                   // Rect.fromLTRB(46.8537414965986, 53.343701399689,
@@ -390,6 +387,52 @@ class _PositionSelectPartState extends State<PositionSelectPart> {
                   ));
                 },
                 flip: flip,
+              );
+            } else {
+              return Center(
+                child: Text('Reading Bytes'),
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Future<ByteData> getBgBytes() async {
+    return await rootBundle.load('assets/example.png');
+  }
+}
+
+class PositionViewPart extends StatefulWidget {
+  const PositionViewPart({super.key});
+
+  @override
+  State<PositionViewPart> createState() => _PositionViewPartState();
+}
+
+class _PositionViewPartState extends State<PositionViewPart> {
+  Offset? position;
+  bool flip = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        FutureBuilder(
+          future: getBgBytes(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return FormPositionView(
+                bytes: snapshot.data!.buffer.asUint8List(),
+                positions: [
+                  Offset(50, 50),
+                  Offset(75, 50),
+                  Offset(50, 75),
+                  Offset(25, 60),
+                  Offset(90, 75),
+                ],
               );
             } else {
               return Center(
