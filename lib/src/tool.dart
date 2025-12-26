@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 ///Tool to adjust use tap position
 class FormTapOffsetTool extends StatefulWidget {
+  ///Const Constructor
   const FormTapOffsetTool({required this.bytes, this.onTap, super.key});
 
   ///Trigger when User Tap, function will return an Offset between intended and actual touch position

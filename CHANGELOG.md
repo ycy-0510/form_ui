@@ -1,3 +1,7 @@
+## [0.5.3]
+- Fix missing documentation in `FormTapOffsetTool`
+- Format code
+
 ## [0.5.2]
 - Fix static analysis issues (deprecated dialogBackgroundColor)
 
