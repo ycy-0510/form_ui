@@ -9,7 +9,7 @@ class FormTheme {
       seedColor: Colors.blue,
       brightness: Brightness.light,
     ),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: Colors.white,
       shadowColor: Colors.transparent,
       elevation: 0,
@@ -89,7 +89,7 @@ class FormTheme {
       seedColor: Colors.blue,
       brightness: Brightness.dark,
     ),
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: Color.fromARGB(255, 28, 28, 30),
       shadowColor: Colors.transparent,
       elevation: 0,
