@@ -17,7 +17,9 @@ class FormTheme {
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: Colors.white,
     ),
-    dialogBackgroundColor: Colors.white,
+    dialogTheme: const DialogThemeData(
+      backgroundColor: Colors.white,
+    ),
     scaffoldBackgroundColor: const Color.fromARGB(255, 243, 242, 247),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color.fromARGB(255, 243, 242, 247),
@@ -70,8 +72,7 @@ class FormTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15), gapPadding: 5),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), gapPadding: 5),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         gapPadding: 5,
@@ -97,9 +98,11 @@ class FormTheme {
     bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: Color.fromARGB(255, 28, 28, 30),
     ),
-    dialogBackgroundColor: const Color.fromARGB(255, 28, 28, 30),
+    dialogTheme: const DialogThemeData(
+      backgroundColor: Color.fromARGB(255, 28, 28, 30),
+    ),
     appBarTheme: const AppBarTheme(
-      color: Colors.black,
+      backgroundColor: Colors.black,
       surfaceTintColor: Colors.black,
       centerTitle: true,
     ),
@@ -146,8 +149,7 @@ class FormTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15), gapPadding: 5),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), gapPadding: 5),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         gapPadding: 5,

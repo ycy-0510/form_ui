@@ -1,3 +1,6 @@
+## [0.5.2]
+- Fix static analysis issues (deprecated dialogBackgroundColor)
+
 ## [0.5.1]
 - Maintenance update
 
