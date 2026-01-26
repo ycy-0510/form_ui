@@ -287,6 +287,7 @@ class CounterPart extends StatefulWidget {
 class _CounterPartState extends State<CounterPart> {
   int value = 0;
   int valueCustom = 0;
+  int valueNoLabel = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -313,6 +314,15 @@ class _CounterPartState extends State<CounterPart> {
           onChange: (v) {
             setState(() {
               valueCustom = v;
+            });
+          },
+        ),
+        Text('Counter without Label', style: TextStyle(fontSize: 18)),
+        FormCounter.withoutLabel(
+          value: valueNoLabel,
+          onChange: (v) {
+            setState(() {
+              valueNoLabel = v;
             });
           },
         ),
@@ -524,24 +534,65 @@ class TogglePart extends StatefulWidget {
 }
 
 class _TogglePartState extends State<TogglePart> {
-  bool value = false;
+  bool value1 = false;
+  bool value2 = false;
+  bool value3 = false;
   @override
   Widget build(BuildContext context) {
-    return FormToggle(
-      value: value,
-      hint: 'Toggle Button',
-      onChange: (v) {
-        setState(() {
-          value = v;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-            'Toggle: ${v ? 'On' : 'Off'}',
+    return Row(
+      spacing: 5,
+      children: [
+        FormToggle(
+          value: value1,
+          child: Icon(Icons.volume_off),
+          onChange: (v) {
+            setState(() {
+              value1 = v;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Toggle: ${v ? 'On' : 'Off'}',
+              ),
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(milliseconds: 300),
+            ));
+          },
+        ),
+        Expanded(
+          child: FormToggle(
+            value: value2,
+            hint: 'Toggle Button',
+            onChange: (v) {
+              setState(() {
+                value2 = v;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  'Toggle: ${v ? 'On' : 'Off'}',
+                ),
+                behavior: SnackBarBehavior.floating,
+                duration: Duration(milliseconds: 300),
+              ));
+            },
           ),
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(milliseconds: 300),
-        ));
-      },
+        ),
+        FormToggle(
+          value: value3,
+          child: Icon(Icons.screen_lock_portrait),
+          onChange: (v) {
+            setState(() {
+              value3 = v;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Toggle: ${v ? 'On' : 'Off'}',
+              ),
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(milliseconds: 300),
+            ));
+          },
+        ),
+      ],
     );
   }
 }

@@ -73,4 +73,35 @@ void main() {
     expect(value, 0);
     expect(find.text('0'), findsOneWidget);
   });
+  testWidgets('FormCounter.withoutLabel renders without hint', (WidgetTester tester) async {
+    int value = 0;
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: StatefulBuilder(
+          builder: (context, setState) {
+            return FormCounter.withoutLabel(
+              value: value,
+              onChange: (v) {
+                setState(() {
+                  value = v;
+                });
+              },
+            );
+          },
+        ),
+      ),
+    ));
+
+    // Should not find any text 'Counter' because we didn't provide any hint, and withoutLabel shouldn't use one.
+    expect(find.text('Counter'), findsNothing);
+
+    expect(find.byIcon(Icons.remove), findsOneWidget);
+    expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(find.text('0'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+    expect(value, 1);
+    expect(find.text('1'), findsOneWidget);
+  });
 }

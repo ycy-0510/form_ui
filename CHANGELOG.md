@@ -1,3 +1,8 @@
+## [0.7.0]
+- Add `FormCounter.withoutLabel` constructor for compact counter without label
+- Improve `FormToggle` to respect parent width constraints (expands in tight constraints, shrinks in loose)
+- Add tests for new features
+
 ## [0.6.0]
 - Add `FormToggle` widget
 - Update `FormCounter` to show step value in add button

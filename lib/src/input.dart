@@ -187,8 +187,17 @@ class FormCounter extends StatelessWidget {
       this.onChange,
       super.key});
 
+  const FormCounter.withoutLabel(
+      {required this.value,
+      this.max = 10000000,
+      this.min = 0,
+      this.step = 1,
+      this.onChange,
+      super.key})
+      : hint = null;
+
   /// hint
-  final String hint;
+  final String? hint;
 
   /// Max and Min value for counter
   final int min, max;
@@ -204,6 +213,56 @@ class FormCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (hint == null) {
+      return Theme(
+        data: FormTheme.theme(context),
+        child: SizedBox(
+          height: 50,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              OutlinedButton(
+                  onPressed: () {
+                    if (onChange != null && min < (value - (step - 1))) {
+                      onChange!(value - step);
+                      HapticFeedback.lightImpact();
+                    }
+                  },
+                  child: step == 1
+                      ? Icon(Icons.remove)
+                      : Text(
+                          "-$step",
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+              SizedBox(
+                width: 100,
+                child: Center(
+                  child: Text(
+                    '$value',
+                    style: TextStyle(fontSize: 25),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              OutlinedButton(
+                  onPressed: () {
+                    if (onChange != null && (value + (step - 1)) < max) {
+                      onChange!(value + step);
+                      HapticFeedback.lightImpact();
+                    }
+                  },
+                  child: step == 1
+                      ? Icon(Icons.add)
+                      : Text(
+                          "+$step",
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+            ],
+          ),
+        ),
+      );
+    }
     return Theme(
       data: FormTheme.theme(context),
       child: SizedBox(
@@ -215,7 +274,7 @@ class FormCounter extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                hint,
+                hint!,
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -684,32 +743,35 @@ class FormToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: FormTheme.theme(context),
-      child: SizedBox(
-        height: 50,
-        child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 300),
-          child: value
-              ? FormPrimaryButton(
-                  key: ValueKey('filled'),
-                  onPressed: () {
-                    HapticFeedback.lightImpact();
-                    if (onChange != null) {
-                      onChange!(!value);
-                    }
-                  },
-                  child: child ?? Text(hint!),
-                )
-              : FormSecondaryButton(
-                  key: ValueKey('outlined'),
-                  onPressed: () {
-                    HapticFeedback.lightImpact();
-                    if (onChange != null) {
-                      onChange!(!value);
-                    }
-                  },
-                  child: child ?? Text(hint!),
-                ),
-        ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return AnimatedSwitcher(
+            duration: Duration(milliseconds: 300),
+            child: SizedBox(
+              key: ValueKey(value),
+              width: constraints.hasTightWidth ? constraints.maxWidth : null,
+              child: value
+                  ? FormPrimaryButton(
+                      onPressed: () {
+                        HapticFeedback.lightImpact();
+                        if (onChange != null) {
+                          onChange!(!value);
+                        }
+                      },
+                      child: child ?? Text(hint!),
+                    )
+                  : FormSecondaryButton(
+                      onPressed: () {
+                        HapticFeedback.lightImpact();
+                        if (onChange != null) {
+                          onChange!(!value);
+                        }
+                      },
+                      child: child ?? Text(hint!),
+                    ),
+            ),
+          );
+        },
       ),
     );
   }

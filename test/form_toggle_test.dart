@@ -99,4 +99,26 @@ void main() {
     ));
     expect(find.byType(AnimatedSwitcher), findsOneWidget);
   });
+
+  testWidgets('FormToggle expands to parent width', (WidgetTester tester) async {
+    bool value = false;
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: SizedBox(
+            width: 200,
+            child: FormToggle(
+              value: value,
+              hint: 'Toggle Hint',
+              onChange: (v) {},
+            ),
+          ),
+        ),
+      ),
+    ));
+
+    final buttonFinder = find.byType(OutlinedButton);
+    final buttonSize = tester.getSize(buttonFinder);
+    expect(buttonSize.width, 200);
+  });
 }
