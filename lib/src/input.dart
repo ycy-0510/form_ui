@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_ui/form_ui.dart';
 import 'package:form_ui/src/theme.dart';
 
 ///Text Input
@@ -151,9 +152,7 @@ class FormSelect<T> extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-              color: value == null
-                  ? Theme.of(context).colorScheme.error
-                  : Colors.grey.shade600,
+              color: value == null ? Theme.of(context).colorScheme.error : Colors.grey.shade600,
               style: BorderStyle.solid,
               width: value == null ? 1.6 : 0.8),
         ),
@@ -184,6 +183,7 @@ class FormCounter extends StatelessWidget {
       required this.value,
       this.max = 10000000,
       this.min = 0,
+      this.step = 1,
       this.onChange,
       super.key});
 
@@ -192,6 +192,9 @@ class FormCounter extends StatelessWidget {
 
   /// Max and Min value for counter
   final int min, max;
+
+  /// Step value for counter
+  final int step;
 
   ///Default value
   final int value;
@@ -218,28 +221,40 @@ class FormCounter extends StatelessWidget {
             ),
             OutlinedButton(
                 onPressed: () {
-                  if (onChange != null && min < value) {
-                    onChange!(value - 1);
+                  if (onChange != null && min < (value - (step - 1))) {
+                    onChange!(value - step);
                     HapticFeedback.lightImpact();
                   }
                 },
-                child: Icon(Icons.remove)),
+                child: step == 1
+                    ? Icon(Icons.remove)
+                    : Text(
+                        "-$step",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      )),
             SizedBox(
               width: 100,
-              child: Text(
-                '$value',
-                style: TextStyle(fontSize: 25),
-                textAlign: TextAlign.center,
+              child: Center(
+                child: Text(
+                  '$value',
+                  style: TextStyle(fontSize: 25),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             OutlinedButton(
                 onPressed: () {
-                  if (onChange != null && value < max) {
-                    onChange!(value + 1);
+                  if (onChange != null && (value + (step - 1)) < max) {
+                    onChange!(value + step);
                     HapticFeedback.lightImpact();
                   }
                 },
-                child: Icon(Icons.add)),
+                child: step == 1
+                    ? Icon(Icons.add)
+                    : Text(
+                        "+$step",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      )),
           ],
         ),
       ),
@@ -351,12 +366,9 @@ class FormPositionSelect extends StatelessWidget {
               height: snapshot.data?.height.toDouble(),
               child: GestureDetector(
                 onTapDown: (details) {
-                  Offset point = _adjustedOffset(
-                          details.localPosition - tapOffset,
-                          Size(snapshot.data!.width.toDouble(),
-                              snapshot.data!.height.toDouble()))
-                      .scale(100 / snapshot.data!.width,
-                          100 / snapshot.data!.height);
+                  Offset point = _adjustedOffset(details.localPosition - tapOffset,
+                          Size(snapshot.data!.width.toDouble(), snapshot.data!.height.toDouble()))
+                      .scale(100 / snapshot.data!.width, 100 / snapshot.data!.height);
                   if (allowSelectZone.any((zone) => zone.contains(point))) {
                     HapticFeedback.lightImpact();
                     if (onChange != null) {
@@ -391,8 +403,7 @@ class FormPositionSelect extends StatelessWidget {
                                   position,
                                   blinkStreamSnap.data!,
                                   allowSelectZone,
-                                  showAllowSelectZone ||
-                                      (selectSnapShot.data ?? false),
+                                  showAllowSelectZone || (selectSnapShot.data ?? false),
                                   flip,
                                 ),
                                 size: Size(300, 20),
@@ -460,12 +471,7 @@ class FormPositionSelect extends StatelessWidget {
         }
       } else {
         //point
-        final testPoints = [
-          zone.topLeft,
-          zone.topRight,
-          zone.bottomRight,
-          zone.bottomLeft
-        ];
+        final testPoints = [zone.topLeft, zone.topRight, zone.bottomRight, zone.bottomLeft];
         for (final testPoint in testPoints) {
           if ((point - testPoint).distance < minDis) {
             minDis = (point - testPoint).distance;
@@ -477,12 +483,10 @@ class FormPositionSelect extends StatelessWidget {
     return minPoint;
   }
 
-  Future<ui.Image> _rotatedImage(
-      {required ui.Image image, required double angle}) {
+  Future<ui.Image> _rotatedImage({required ui.Image image, required double angle}) {
     var pictureRecorder = ui.PictureRecorder();
     Canvas canvas = Canvas(pictureRecorder);
-    final double r =
-        sqrt(image.width * image.width + image.height * image.height) / 2;
+    final double r = sqrt(image.width * image.width + image.height * image.height) / 2;
     final alpha = atan(image.height / image.width);
     final beta = alpha + angle;
     final shiftY = r * sin(beta);
@@ -509,8 +513,8 @@ class _FormPosisionSelectPainter extends CustomPainter {
   final List<Rect> allowSelectZone;
   final bool showAllowSelectZone;
   final bool flip;
-  const _FormPosisionSelectPainter(this.bg, this.position, this.blink,
-      this.allowSelectZone, this.showAllowSelectZone, this.flip);
+  const _FormPosisionSelectPainter(this.bg, this.position, this.blink, this.allowSelectZone,
+      this.showAllowSelectZone, this.flip);
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawImage(bg, Offset.zero, Paint());
@@ -521,12 +525,8 @@ class _FormPosisionSelectPainter extends CustomPainter {
       for (var zone in allowSelectZone) {
         canvas.drawRect(
             Rect.fromPoints(
-                adjustedOffset(
-                    zone.topLeft.scale(size.width / 100, size.height / 100),
-                    size),
-                adjustedOffset(
-                    zone.bottomRight.scale(size.width / 100, size.height / 100),
-                    size)),
+                adjustedOffset(zone.topLeft.scale(size.width / 100, size.height / 100), size),
+                adjustedOffset(zone.bottomRight.scale(size.width / 100, size.height / 100), size)),
             paint);
       }
     }
@@ -539,14 +539,10 @@ class _FormPosisionSelectPainter extends CustomPainter {
         ..color = Colors.red
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
-          adjustedOffset(
-              position!.scale(size.width / 100, size.height / 100), size),
-          10,
-          paint);
+          adjustedOffset(position!.scale(size.width / 100, size.height / 100), size), 10, paint);
       for (int i = 0; i <= blink; i++) {
         canvas.drawCircle(
-            adjustedOffset(
-                position!.scale(size.width / 100, size.height / 100), size),
+            adjustedOffset(position!.scale(size.width / 100, size.height / 100), size),
             10 + i.toDouble(),
             linePaint);
       }
@@ -598,8 +594,8 @@ class FormPositionView extends StatelessWidget {
                         builder: (context, blinkStreamSnap) {
                           if (blinkStreamSnap.hasData) {
                             return CustomPaint(
-                              painter: _FormPosisionViewPainter(snapshot.data!,
-                                  positions, blinkStreamSnap.data!),
+                              painter: _FormPosisionViewPainter(
+                                  snapshot.data!, positions, blinkStreamSnap.data!),
                               size: Size(300, 20),
                             );
                           } else {
@@ -648,11 +644,10 @@ class _FormPosisionViewPainter extends CustomPainter {
       Paint paint = Paint()
         ..color = Colors.red
         ..style = PaintingStyle.fill;
-      canvas.drawCircle(
-          position.scale(size.width / 100, size.height / 100), 10, paint);
+      canvas.drawCircle(position.scale(size.width / 100, size.height / 100), 10, paint);
       for (int i = 0; i <= blink; i++) {
-        canvas.drawCircle(position.scale(size.width / 100, size.height / 100),
-            10 + i.toDouble(), linePaint);
+        canvas.drawCircle(
+            position.scale(size.width / 100, size.height / 100), 10 + i.toDouble(), linePaint);
       }
     }
   }
@@ -660,5 +655,62 @@ class _FormPosisionViewPainter extends CustomPainter {
   @override
   bool shouldRepaint(_FormPosisionViewPainter oldDelegate) {
     return true;
+  }
+}
+
+///Toggle Input
+class FormToggle extends StatelessWidget {
+  const FormToggle({
+    required this.value,
+    this.hint,
+    this.child,
+    this.onChange,
+    super.key,
+  }) : assert(hint != null || child != null);
+
+  ///Default Value
+  final bool value;
+
+  /// hint (Text label for button)
+  final String? hint;
+
+  /// child (Widget label for button)
+  final Widget? child;
+
+  ///Trigger when Value Change
+  final ValueChanged<bool>? onChange;
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: FormTheme.theme(context),
+      child: SizedBox(
+        height: 50,
+        child: AnimatedSwitcher(
+          duration: Duration(milliseconds: 300),
+          child: value
+              ? FormPrimaryButton(
+                  key: ValueKey('filled'),
+                  onPressed: () {
+                    HapticFeedback.lightImpact();
+                    if (onChange != null) {
+                      onChange!(!value);
+                    }
+                  },
+                  child: child ?? Text(hint!),
+                )
+              : FormSecondaryButton(
+                  key: ValueKey('outlined'),
+                  onPressed: () {
+                    HapticFeedback.lightImpact();
+                    if (onChange != null) {
+                      onChange!(!value);
+                    }
+                  },
+                  child: child ?? Text(hint!),
+                ),
+        ),
+      ),
+    );
   }
 }

@@ -1,3 +1,8 @@
+## [0.6.0]
+- Add `FormToggle` widget
+- Update `FormCounter` to show step value in add button
+- Format code
+
 ## [0.5.3]
 - Fix missing documentation in `FormTapOffsetTool`
 - Format code

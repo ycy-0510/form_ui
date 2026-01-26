@@ -1,6 +1,6 @@
 name: form_ui
 description: "A simple and clean Flutter form UI package featuring buttons, text inputs, select inputs, counters, checkboxes, and position selectors."
-version: 0.5.3
+version: 0.6.0
 homepage: https://github.com/ycy-0510/form_ui
 
 environment:
