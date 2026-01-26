@@ -50,7 +50,7 @@ class FormTheme {
         padding: const EdgeInsets.all(10),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        iconColor: Colors.blue,
+        iconColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     ),
@@ -72,8 +72,7 @@ class FormTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15), gapPadding: 5),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), gapPadding: 5),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         gapPadding: 5,
@@ -131,6 +130,7 @@ class FormTheme {
         padding: const EdgeInsets.all(10),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
+        iconColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     ),
@@ -141,6 +141,7 @@ class FormTheme {
       side: const BorderSide(
         color: Colors.blue,
       ),
+      iconColor: Colors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     )),
     textButtonTheme: TextButtonThemeData(
@@ -150,8 +151,7 @@ class FormTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15), gapPadding: 5),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), gapPadding: 5),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         gapPadding: 5,

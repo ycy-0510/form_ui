@@ -1,3 +1,7 @@
+## [0.7.1]
+- Fix icon colors in button themes
+- Code formatting improvements
+
 ## [0.7.0]
 - Add `FormCounter.withoutLabel` constructor for compact counter without label
 - Improve `FormToggle` to respect parent width constraints (expands in tight constraints, shrinks in loose)
