@@ -185,6 +185,7 @@ class FormCounter extends StatelessWidget {
       this.min = 0,
       this.step = 1,
       this.onChange,
+      this.width,
       super.key});
 
   const FormCounter.withoutLabel(
@@ -193,6 +194,7 @@ class FormCounter extends StatelessWidget {
       this.min = 0,
       this.step = 1,
       this.onChange,
+      this.width,
       super.key})
       : hint = null;
 
@@ -210,6 +212,9 @@ class FormCounter extends StatelessWidget {
 
   ///Trigger when Value Change
   final ValueChanged<int>? onChange;
+
+  ///Width of counter (default is 100)
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +241,7 @@ class FormCounter extends StatelessWidget {
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         )),
               SizedBox(
-                width: 100,
+                width: width ?? 100,
                 child: Center(
                   child: Text(
                     '$value',

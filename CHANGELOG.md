@@ -1,3 +1,6 @@
+## [0.7.2]
+- Add `width` parameter to `FormCounter` and `FormCounter.withoutLabel` for customizable counter width
+
 ## [0.7.1]
 - Fix icon colors in button themes
 - Code formatting improvements
