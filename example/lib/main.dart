@@ -23,9 +23,11 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.light)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue, brightness: Brightness.light)),
       darkTheme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue, brightness: Brightness.dark)),
       themeMode: themeMode,
       home: ScaffoldMessenger(
         child: Scaffold(
@@ -84,6 +86,7 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -103,6 +106,18 @@ class _HomeBodyState extends State<HomeBody> {
                 TogglePart(),
                 CounterPart(),
                 SelectPart(),
+                FormSearchBar(
+                  controller: _searchController,
+                  onChanged: (value) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        'Search: $value',
+                      ),
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(milliseconds: 300),
+                    ));
+                  },
+                ),
                 FormTextInput(
                   hintText: 'Hint Text',
                   labelText: 'Label Text',
@@ -174,7 +189,8 @@ class _HomeBodyState extends State<HomeBody> {
                     style: FormPrimaryButton.dangerStyle,
                     child: Text(
                       'Primary Danger',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )),
                 FormSecondaryButton(
                     onPressed: () {
@@ -203,7 +219,8 @@ class _HomeBodyState extends State<HomeBody> {
                     style: FormSecondaryButton.dangerStyle,
                     child: Text(
                       'Secondary Danger',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )),
               ],
             ),
@@ -393,10 +410,10 @@ class _PositionSelectPartState extends State<PositionSelectPart> {
               return FormPositionSelect(
                 bytes: snapshot.data!.buffer.asUint8List(),
                 allowSelectZone: [
-                  Rect.fromLTRB(
-                      43.5374149659864, 11.1975116640747, 46.8537414965986, 88.4914463452566),
-                  Rect.fromLTRB(
-                      46.8537414965986, 11.1975116640747, 53.1462585034014, 46.9673405909798),
+                  Rect.fromLTRB(43.5374149659864, 11.1975116640747,
+                      46.8537414965986, 88.4914463452566),
+                  Rect.fromLTRB(46.8537414965986, 11.1975116640747,
+                      53.1462585034014, 46.9673405909798),
                   // Rect.fromLTRB(53.1462585034014, 11.1975116640747,
                   //     56.4625850340136, 88.4914463452566),
                   // Rect.fromLTRB(46.8537414965986, 53.343701399689,

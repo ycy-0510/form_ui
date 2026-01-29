@@ -1,3 +1,7 @@
+## [0.8.0]
+- Add `FormSearchBar` widget
+- Update `FormTextInput` and `FormSelect` theme handling
+
 ## [0.7.2]
 - Add `width` parameter to `FormCounter` and `FormCounter.withoutLabel` for customizable counter width
 

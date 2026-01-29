@@ -152,7 +152,9 @@ class FormSelect<T> extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-              color: value == null ? Theme.of(context).colorScheme.error : Colors.grey.shade600,
+              color: value == null
+                  ? Theme.of(context).colorScheme.error
+                  : Colors.grey.shade600,
               style: BorderStyle.solid,
               width: value == null ? 1.6 : 0.8),
         ),
@@ -238,7 +240,8 @@ class FormCounter extends StatelessWidget {
                       ? Icon(Icons.remove)
                       : Text(
                           "-$step",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         )),
               SizedBox(
                 width: width ?? 100,
@@ -261,7 +264,8 @@ class FormCounter extends StatelessWidget {
                       ? Icon(Icons.add)
                       : Text(
                           "+$step",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         )),
             ],
           ),
@@ -294,7 +298,8 @@ class FormCounter extends StatelessWidget {
                     ? Icon(Icons.remove)
                     : Text(
                         "-$step",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       )),
             SizedBox(
               width: 100,
@@ -317,7 +322,8 @@ class FormCounter extends StatelessWidget {
                     ? Icon(Icons.add)
                     : Text(
                         "+$step",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       )),
           ],
         ),
@@ -430,9 +436,12 @@ class FormPositionSelect extends StatelessWidget {
               height: snapshot.data?.height.toDouble(),
               child: GestureDetector(
                 onTapDown: (details) {
-                  Offset point = _adjustedOffset(details.localPosition - tapOffset,
-                          Size(snapshot.data!.width.toDouble(), snapshot.data!.height.toDouble()))
-                      .scale(100 / snapshot.data!.width, 100 / snapshot.data!.height);
+                  Offset point = _adjustedOffset(
+                          details.localPosition - tapOffset,
+                          Size(snapshot.data!.width.toDouble(),
+                              snapshot.data!.height.toDouble()))
+                      .scale(100 / snapshot.data!.width,
+                          100 / snapshot.data!.height);
                   if (allowSelectZone.any((zone) => zone.contains(point))) {
                     HapticFeedback.lightImpact();
                     if (onChange != null) {
@@ -467,7 +476,8 @@ class FormPositionSelect extends StatelessWidget {
                                   position,
                                   blinkStreamSnap.data!,
                                   allowSelectZone,
-                                  showAllowSelectZone || (selectSnapShot.data ?? false),
+                                  showAllowSelectZone ||
+                                      (selectSnapShot.data ?? false),
                                   flip,
                                 ),
                                 size: Size(300, 20),
@@ -535,7 +545,12 @@ class FormPositionSelect extends StatelessWidget {
         }
       } else {
         //point
-        final testPoints = [zone.topLeft, zone.topRight, zone.bottomRight, zone.bottomLeft];
+        final testPoints = [
+          zone.topLeft,
+          zone.topRight,
+          zone.bottomRight,
+          zone.bottomLeft
+        ];
         for (final testPoint in testPoints) {
           if ((point - testPoint).distance < minDis) {
             minDis = (point - testPoint).distance;
@@ -547,10 +562,12 @@ class FormPositionSelect extends StatelessWidget {
     return minPoint;
   }
 
-  Future<ui.Image> _rotatedImage({required ui.Image image, required double angle}) {
+  Future<ui.Image> _rotatedImage(
+      {required ui.Image image, required double angle}) {
     var pictureRecorder = ui.PictureRecorder();
     Canvas canvas = Canvas(pictureRecorder);
-    final double r = sqrt(image.width * image.width + image.height * image.height) / 2;
+    final double r =
+        sqrt(image.width * image.width + image.height * image.height) / 2;
     final alpha = atan(image.height / image.width);
     final beta = alpha + angle;
     final shiftY = r * sin(beta);
@@ -577,8 +594,8 @@ class _FormPosisionSelectPainter extends CustomPainter {
   final List<Rect> allowSelectZone;
   final bool showAllowSelectZone;
   final bool flip;
-  const _FormPosisionSelectPainter(this.bg, this.position, this.blink, this.allowSelectZone,
-      this.showAllowSelectZone, this.flip);
+  const _FormPosisionSelectPainter(this.bg, this.position, this.blink,
+      this.allowSelectZone, this.showAllowSelectZone, this.flip);
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawImage(bg, Offset.zero, Paint());
@@ -589,8 +606,12 @@ class _FormPosisionSelectPainter extends CustomPainter {
       for (var zone in allowSelectZone) {
         canvas.drawRect(
             Rect.fromPoints(
-                adjustedOffset(zone.topLeft.scale(size.width / 100, size.height / 100), size),
-                adjustedOffset(zone.bottomRight.scale(size.width / 100, size.height / 100), size)),
+                adjustedOffset(
+                    zone.topLeft.scale(size.width / 100, size.height / 100),
+                    size),
+                adjustedOffset(
+                    zone.bottomRight.scale(size.width / 100, size.height / 100),
+                    size)),
             paint);
       }
     }
@@ -603,10 +624,14 @@ class _FormPosisionSelectPainter extends CustomPainter {
         ..color = Colors.red
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
-          adjustedOffset(position!.scale(size.width / 100, size.height / 100), size), 10, paint);
+          adjustedOffset(
+              position!.scale(size.width / 100, size.height / 100), size),
+          10,
+          paint);
       for (int i = 0; i <= blink; i++) {
         canvas.drawCircle(
-            adjustedOffset(position!.scale(size.width / 100, size.height / 100), size),
+            adjustedOffset(
+                position!.scale(size.width / 100, size.height / 100), size),
             10 + i.toDouble(),
             linePaint);
       }
@@ -658,8 +683,8 @@ class FormPositionView extends StatelessWidget {
                         builder: (context, blinkStreamSnap) {
                           if (blinkStreamSnap.hasData) {
                             return CustomPaint(
-                              painter: _FormPosisionViewPainter(
-                                  snapshot.data!, positions, blinkStreamSnap.data!),
+                              painter: _FormPosisionViewPainter(snapshot.data!,
+                                  positions, blinkStreamSnap.data!),
                               size: Size(300, 20),
                             );
                           } else {
@@ -708,10 +733,11 @@ class _FormPosisionViewPainter extends CustomPainter {
       Paint paint = Paint()
         ..color = Colors.red
         ..style = PaintingStyle.fill;
-      canvas.drawCircle(position.scale(size.width / 100, size.height / 100), 10, paint);
+      canvas.drawCircle(
+          position.scale(size.width / 100, size.height / 100), 10, paint);
       for (int i = 0; i <= blink; i++) {
-        canvas.drawCircle(
-            position.scale(size.width / 100, size.height / 100), 10 + i.toDouble(), linePaint);
+        canvas.drawCircle(position.scale(size.width / 100, size.height / 100),
+            10 + i.toDouble(), linePaint);
       }
     }
   }
@@ -777,6 +803,64 @@ class FormToggle extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+///Search Bar
+class FormSearchBar extends StatelessWidget {
+  const FormSearchBar({
+    super.key,
+    required this.controller,
+    this.hintText = 'Search...',
+    this.onChanged,
+    this.onClear,
+  });
+
+  ///Text Editing Controller
+  final TextEditingController controller;
+
+  ///Hint Text
+  final String hintText;
+
+  ///On Changed
+  final ValueChanged<String>? onChanged;
+
+  ///On Clear
+  final VoidCallback? onClear;
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: FormTheme.theme(context),
+      child: TextField(
+        controller: controller,
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          hintText: hintText,
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon: controller.text.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.clear();
+                    onChanged?.call('');
+                    onClear?.call();
+                    HapticFeedback.lightImpact();
+                  },
+                )
+              : null,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 0,
+          ),
+        ),
       ),
     );
   }
