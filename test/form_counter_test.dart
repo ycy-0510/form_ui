@@ -73,7 +73,8 @@ void main() {
     expect(value, 0);
     expect(find.text('0'), findsOneWidget);
   });
-  testWidgets('FormCounter.withoutLabel renders without hint', (WidgetTester tester) async {
+  testWidgets('FormCounter.withoutLabel renders without hint',
+      (WidgetTester tester) async {
     int value = 0;
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(

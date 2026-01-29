@@ -72,7 +72,8 @@ class FormTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), gapPadding: 5),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15), gapPadding: 5),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         gapPadding: 5,
@@ -151,7 +152,8 @@ class FormTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), gapPadding: 5),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15), gapPadding: 5),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         gapPadding: 5,

@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:form_ui/form_ui.dart';
 
 void main() {
-  testWidgets('FormToggle renders ElevatedButton when value is true', (WidgetTester tester) async {
+  testWidgets('FormToggle renders ElevatedButton when value is true',
+      (WidgetTester tester) async {
     bool value = true;
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
@@ -20,7 +21,8 @@ void main() {
     expect(find.byType(OutlinedButton), findsNothing);
   });
 
-  testWidgets('FormToggle renders OutlinedButton when value is false', (WidgetTester tester) async {
+  testWidgets('FormToggle renders OutlinedButton when value is false',
+      (WidgetTester tester) async {
     bool value = false;
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
@@ -37,7 +39,8 @@ void main() {
     expect(find.byType(ElevatedButton), findsNothing);
   });
 
-  testWidgets('FormToggle toggles value when pressed', (WidgetTester tester) async {
+  testWidgets('FormToggle toggles value when pressed',
+      (WidgetTester tester) async {
     bool value = false;
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
@@ -100,7 +103,8 @@ void main() {
     expect(find.byType(AnimatedSwitcher), findsOneWidget);
   });
 
-  testWidgets('FormToggle expands to parent width', (WidgetTester tester) async {
+  testWidgets('FormToggle expands to parent width',
+      (WidgetTester tester) async {
     bool value = false;
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
